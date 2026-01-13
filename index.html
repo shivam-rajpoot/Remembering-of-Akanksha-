@@ -9,7 +9,7 @@
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI', sans-serif;}
 body{
     height:100vh;
-    background:linear-gradient(to bottom,#020111,#120f1f,#000);
+    background:linear-gradient(to bottom,#01010a,#0c0b18,#000);
     color:white;
     overflow:hidden;
     display:flex;
@@ -21,102 +21,134 @@ body{
 .rain{
     position:fixed;
     width:2px;
-    height:60px;
-    background:rgba(255,255,255,0.15);
+    height:70px;
+    background:rgba(255,255,255,0.12);
     animation:rainFall linear infinite;
 }
 @keyframes rainFall{
-    from{transform:translateY(-100px)}
+    from{transform:translateY(-120px)}
+    to{transform:translateY(120vh)}
+}
+
+/* 💧 Tears */
+.tear{
+    position:fixed;
+    font-size:14px;
+    opacity:0.3;
+    animation:tearFall linear infinite;
+}
+@keyframes tearFall{
+    from{transform:translateY(-10vh)}
     to{transform:translateY(110vh)}
 }
 
 /* 🕯 Candle */
 .candle{
-    position:absolute;
-    bottom:70px;
-    width:40px;
-    height:120px;
-    background:#f5f5f5;
+    width:34px;
+    height:110px;
+    background:#f3f3f3;
     border-radius:10px;
+    position:relative;
 }
 .flame{
     position:absolute;
-    top:-35px;
+    top:-32px;
     left:50%;
-    width:22px;
-    height:35px;
-    background:radial-gradient(circle,#fff176,#ff9800,#ff5722);
+    width:20px;
+    height:32px;
+    background:radial-gradient(circle,#fff9c4,#ffb300,#ff7043);
     border-radius:50%;
     transform:translateX(-50%);
-    animation:flicker 1.2s infinite;
+    animation:flicker 1.3s infinite;
 }
 @keyframes flicker{
     0%{transform:translateX(-50%) scale(1)}
-    50%{transform:translateX(-48%) scale(0.9)}
+    50%{transform:translateX(-47%) scale(0.9)}
     100%{transform:translateX(-50%) scale(1)}
+}
+
+/* 🌫 Smoke */
+.smoke{
+    position:absolute;
+    top:-60px;
+    left:50%;
+    width:22px;
+    height:22px;
+    background:rgba(255,255,255,0.18);
+    border-radius:50%;
+    filter:blur(7px);
+    opacity:0;
+}
+.smoke.active{
+    animation:smokeUp 4s infinite;
+}
+@keyframes smokeUp{
+    from{transform:translate(-50%,0) scale(0.6);opacity:0.5}
+    to{transform:translate(-60%,-70px) scale(1.4);opacity:0}
 }
 
 /* 💬 Content */
 .container{
     text-align:center;
     max-width:90%;
+    position:relative;
 }
 h1{
-    font-size:2.4rem;
-    margin-bottom:25px;
+    font-size:2.3rem;
+    margin-bottom:20px;
     animation:fadeIn 3s ease;
 }
 
+/* Lines */
 .line{
     font-size:1.15rem;
     line-height:1.9;
     margin:10px 0;
     opacity:0;
-    animation:slowFade 1.5s forwards;
+    animation:slowFade 1.6s forwards;
 }
-.line:nth-child(2){animation-delay:1.5s}
-.line:nth-child(3){animation-delay:3.5s}
-.line:nth-child(4){animation-delay:5.5s}
-.line:nth-child(5){animation-delay:7.5s}
-.line:nth-child(6){animation-delay:9.5s}
+.line:nth-child(4){animation-delay:1.5s}
+.line:nth-child(5){animation-delay:3.5s}
+.line:nth-child(6){animation-delay:5.5s}
+.line:nth-child(7){animation-delay:7.5s}
+.line:nth-child(8){animation-delay:9.5s}
+.line:nth-child(9){animation-delay:11.5s}
 
 .last{
     animation:slowFade 2s forwards, glow 3s infinite alternate;
-    animation-delay:11.5s;
-    font-weight:500;
+    animation-delay:13.5s;
 }
 
 @keyframes slowFade{
-    from{opacity:0;transform:translateY(15px)}
+    from{opacity:0;transform:translateY(18px)}
     to{opacity:1;transform:translateY(0)}
 }
 @keyframes glow{
-    from{text-shadow:0 0 10px rgba(255,255,255,0.4)}
-    to{text-shadow:0 0 25px rgba(255,255,255,0.9)}
+    from{text-shadow:0 0 8px rgba(255,255,255,0.3)}
+    to{text-shadow:0 0 22px rgba(255,255,255,0.8)}
 }
 
 .footer{
-    margin-top:30px;
-    font-size:0.9rem;
-    color:#ccc;
+    margin-top:28px;
+    font-size:0.85rem;
+    color:#bbb;
     opacity:0;
     animation:fadeIn 3s ease forwards;
-    animation-delay:14s;
-}
-
-button{
-    margin-top:20px;
-    padding:10px 25px;
-    border:none;
-    border-radius:25px;
-    background:rgba(255,255,255,0.15);
-    color:white;
-    font-size:1rem;
+    animation-delay:16s;
 }
 
 @keyframes fadeIn{
     from{opacity:0}
     to{opacity:1}
+}
+
+/* 🕯 Candle row */
+.candle-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    margin:18px auto;
+    width:240px;
 }
 </style>
 </head>
@@ -126,23 +158,41 @@ button{
 <!-- 🌧 Rain -->
 <script>
 for(let i=0;i<120;i++){
-    let drop=document.createElement("div");
-    drop.className="rain";
-    drop.style.left=Math.random()*100+"vw";
-    drop.style.animationDuration=(1.5+Math.random()*2)+"s";
-    drop.style.animationDelay=Math.random()*5+"s";
-    document.body.appendChild(drop);
+    let d=document.createElement("div");
+    d.className="rain";
+    d.style.left=Math.random()*100+"vw";
+    d.style.animationDuration=(1.8+Math.random()*2.5)+"s";
+    d.style.animationDelay=Math.random()*5+"s";
+    document.body.appendChild(d);
 }
 </script>
 
-<!-- 🕯 Candle -->
-<div class="candle">
-    <div class="flame"></div>
-</div>
+<!-- 💧 Tears -->
+<script>
+for(let i=0;i<12;i++){
+    let t=document.createElement("div");
+    t.className="tear";
+    t.innerHTML="💧";
+    t.style.left=Math.random()*100+"vw";
+    t.style.animationDuration=(6+Math.random()*6)+"s";
+    document.body.appendChild(t);
+}
+</script>
 
-<!-- 💭 Content -->
 <div class="container">
     <h1>🕯 Remembering Akanksha</h1>
+
+    <!-- 🕯🕯 Candles -->
+    <div class="candle-row">
+        <div class="candle" id="c1">
+            <div class="flame"></div>
+            <div class="smoke"></div>
+        </div>
+        <div class="candle" id="c2">
+            <div class="flame"></div>
+            <div class="smoke"></div>
+        </div>
+    </div>
 
     <div class="line">कुछ लोग चले जाते हैं…</div>
     <div class="line">पर उनकी यादें कभी नहीं जातीं 💭</div>
@@ -152,9 +202,6 @@ for(let i=0;i<120;i++){
 
     <div class="line">समय बदल जाता है,</div>
     <div class="line last">पर कुछ एहसास नहीं बदलते</div>
-
-    <!-- optional backup button -->
-    <button onclick="playMusic()">🎵 Play Music</button>
 
     <div class="footer">
         Forever in memories 🌙<br>
@@ -168,31 +215,35 @@ for(let i=0;i<120;i++){
 </audio>
 
 <script>
-let musicStarted = false;
-const bgm = document.getElementById("bgm");
-
-// manual backup
-function playMusic(){
-    if(!musicStarted){
+/* 🎵 music auto start */
+let started=false;
+const bgm=document.getElementById("bgm");
+function startMusic(){
+    if(!started){
         bgm.play();
-        musicStarted = true;
+        started=true;
     }
 }
+document.addEventListener("click",startMusic,{once:true});
+document.addEventListener("touchstart",startMusic,{once:true});
 
-// auto-start on first tap anywhere
-document.addEventListener("click", () => {
-    if(!musicStarted){
-        bgm.play();
-        musicStarted = true;
-    }
-}, { once:true });
+/* 🕯 Candle extinguish sequence */
+const candle1=document.querySelector("#c1 .flame");
+const candle2=document.querySelector("#c2 .flame");
+const smoke1=document.querySelector("#c1 .smoke");
+const smoke2=document.querySelector("#c2 .smoke");
 
-document.addEventListener("touchstart", () => {
-    if(!musicStarted){
-        bgm.play();
-        musicStarted = true;
-    }
-}, { once:true });
+// first candle off
+setTimeout(()=>{
+    candle1.style.display="none";
+    smoke1.classList.add("active");
+},17000);
+
+// second candle off
+setTimeout(()=>{
+    candle2.style.display="none";
+    smoke2.classList.add("active");
+},20000);
 </script>
 
 </body>
