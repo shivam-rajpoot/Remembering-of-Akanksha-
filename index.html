@@ -3,230 +3,101 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Remembering Akanksha</title>
-
+<title>Remembering Akanksha 🕯️</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif;}
-
-body{
-    height:100vh;
-    overflow:hidden;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    color:white;
-    background:
-        radial-gradient(circle at center bottom,#1b1f46 0%,#070611 60%,#000 100%);
+body {
+  margin:0; padding:0; overflow:hidden; font-family:'Segoe UI',sans-serif;
+  background: radial-gradient(circle at bottom, #0a0a0f 0%, #000 70%);
+  display:flex; align-items:center; justify-content:center; color:white;
 }
 
-/* vignette */
+/* cinematic vignette */
 body::after{
-    content:"";
-    position:fixed;
-    inset:0;
-    background:radial-gradient(circle,transparent 45%,rgba(0,0,0,.9));
-    pointer-events:none;
+  content:""; position:fixed; inset:0;
+  background:radial-gradient(circle,transparent 50%, rgba(0,0,0,0.95));
+  pointer-events:none;
+  z-index:10;
 }
+
+/* container for content */
+.container {text-align:center; z-index:20;}
 
 /* rain */
-.rain{
-    position:fixed;
-    width:2px;
-    height:90px;
-    background:rgba(255,255,255,.15);
-    animation:rain linear infinite;
+.drop{
+  position:fixed; width:2px; height:15px; background:rgba(255,255,255,0.2);
+  top:-20px; animation-name:fall; animation-iteration-count:infinite;
 }
-@keyframes rain{
-    from{transform:translateY(-120px)}
-    to{transform:translateY(120vh)}
-}
+@keyframes fall{100%{transform:translateY(110vh);}}
 
-/* container */
-.container{
-    text-align:center;
-    z-index:2;
-}
+/* candle row */
+.candle-row{display:flex; justify-content:center; gap:30px; margin-bottom:25px;}
 
-/* title */
-h1{
-    font-size:2.2rem;
-    margin-bottom:20px;
-    opacity:0;
-    animation:fadeIn 3s forwards;
+/* lines */
+.line{
+  font-size:1.15rem; margin:12px 0; opacity:0; animation:fadeUp 1.6s forwards;
 }
-@keyframes fadeIn{
-    from{opacity:0}
-    to{opacity:1}
-}
+.line:nth-child(2){animation-delay:1.5s}
+.line:nth-child(3){animation-delay:3.5s}
+.line:nth-child(4){animation-delay:5.5s}
+.line:nth-child(5){animation-delay:7.5s}
+.line:nth-child(6){animation-delay:9.5s}
+.last{animation:fadeUp 2s forwards, glow 3s infinite alternate; animation-delay:11.5s;}
 
-/* 🕯 ULTRA REAL CANDLE */
-.candle{
-    position:relative;
-    width:80px;
-    height:150px;
-    margin:0 30px;
-}
+@keyframes fadeUp{from{opacity:0; transform:translateY(20px);} to{opacity:1; transform:translateY(0);}}
+@keyframes glow{from{text-shadow:0 0 8px rgba(255,255,255,.3);} to{text-shadow:0 0 25px rgba(255,255,255,.8);}}
+.footer{margin-top:30px; font-size:0.85rem; opacity:0; animation:fadeUp 3s forwards; animation-delay:14s;}
 
-/* glass jar */
-.glass{
-    position:absolute;
-    bottom:0;
-    width:100%;
-    height:100%;
-    border-radius:22px;
-    background:
-        linear-gradient(180deg,
-            rgba(255,255,255,.45),
-            rgba(255,255,255,.08),
-            rgba(255,255,255,.25));
-    border:1px solid rgba(255,255,255,.25);
-    backdrop-filter:blur(6px);
-}
+/* SVG candle */
+.candle svg{width:60px; height:140px;}
+.flame{transform-origin:center bottom;}
+.smoke{opacity:0;}
+.smoke.active{animation:smokeUp 4s infinite;}
+@keyframes smokeUp{from{transform:translateY(0) scale(0.5);opacity:0.6} to{transform:translateY(-80px) scale(1.5);opacity:0;}}
 
-/* wax */
-.wax{
-    position:absolute;
-    bottom:12px;
-    left:8px;
-    right:8px;
-    height:65%;
-    background:
-        radial-gradient(circle at top,#fff,#e6e6e6);
-    border-radius:18px;
-    animation:waxMelt 30s linear infinite;
+/* flame flicker */
+@keyframes flicker{
+  0%{transform:scale(1)} 50%{transform:scale(0.9) translateX(-1px)} 100%{transform:scale(1)}
 }
 
 /* wax melt animation */
-@keyframes waxMelt{
-    0%{height:65%}
-    100%{height:52%}
-}
-
-/* flame */
-.flame{
-    position:absolute;
-    top:-42px;
-    left:50%;
-    width:28px;
-    height:42px;
-    background:
-        radial-gradient(circle at 50% 15%,#fff,#ffd54f,#ff6f00);
-    border-radius:50% 50% 50% 50%;
-    transform:translateX(-50%);
-    animation:flicker 1.1s infinite;
-    box-shadow:
-        0 0 30px #ffb300,
-        0 0 70px rgba(255,183,77,.7);
-}
-
-/* candle glow */
-.candle::before{
-    content:"";
-    position:absolute;
-    inset:-90px;
-    background:radial-gradient(circle,#ffcc80 0%,transparent 70%);
-    opacity:.45;
-    z-index:-1;
-}
-
-@keyframes flicker{
-    0%{transform:translateX(-50%) scale(1)}
-    50%{transform:translateX(-48%) scale(.9)}
-    100%{transform:translateX(-50%) scale(1)}
-}
-
-/* smoke */
-.smoke{
-    position:absolute;
-    top:-40px;
-    left:50%;
-    width:28px;
-    height:28px;
-    background:rgba(255,255,255,.3);
-    border-radius:50%;
-    filter:blur(12px);
-    opacity:0;
-}
-.smoke.active{
-    animation:smoke 4s infinite;
-}
-@keyframes smoke{
-    from{transform:translate(-50%,0) scale(.6);opacity:.6}
-    to{transform:translate(-60%,-100px) scale(1.6);opacity:0}
-}
-
-/* candle row */
-.candle-row{
-    display:flex;
-    justify-content:center;
-    margin-bottom:25px;
-}
-
-/* text lines */
-.line{
-    font-size:1.15rem;
-    margin:10px 0;
-    opacity:0;
-    animation:fadeUp 1.6s forwards;
-}
-.line:nth-child(4){animation-delay:1.5s}
-.line:nth-child(5){animation-delay:3.5s}
-.line:nth-child(6){animation-delay:5.5s}
-.line:nth-child(7){animation-delay:7.5s}
-.line:nth-child(8){animation-delay:9.5s}
-.last{
-    animation:fadeUp 2s forwards, glow 3s infinite alternate;
-    animation-delay:11.5s;
-}
-
-@keyframes fadeUp{
-    from{opacity:0;transform:translateY(20px)}
-    to{opacity:1;transform:translateY(0)}
-}
-@keyframes glow{
-    from{text-shadow:0 0 8px rgba(255,255,255,.3)}
-    to{text-shadow:0 0 25px rgba(255,255,255,.9)}
-}
-
-.footer{
-    margin-top:30px;
-    font-size:.85rem;
-    opacity:0;
-    animation:fadeIn 3s forwards;
-    animation-delay:14s;
-}
+.wax{animation:waxMelt 30s infinite;}
+@keyframes waxMelt{0%{transform:scaleY(1)} 100%{transform:scaleY(0.85)}}
 </style>
 </head>
-
 <body>
 
+<!-- cinematic rain -->
 <script>
-for(let i=0;i<100;i++){
-    let r=document.createElement("div");
-    r.className="rain";
-    r.style.left=Math.random()*100+"vw";
-    r.style.animationDuration=(2+Math.random()*3)+"s";
-    document.body.appendChild(r);
+for(let i=0;i<120;i++){
+  let d=document.createElement('div'); d.className='drop';
+  d.style.left=Math.random()*100+'vw';
+  d.style.height=(10+Math.random()*20)+'px';
+  d.style.animationDuration=(1.5+Math.random()*2.5)+'s';
+  d.style.animationDelay=Math.random()*5+'s';
+  document.body.appendChild(d);
 }
 </script>
 
 <div class="container">
-
 <h1>🕯 Remembering Akanksha</h1>
 
 <div class="candle-row">
-    <div class="candle" id="c1">
-        <div class="flame"></div>
-        <div class="smoke"></div>
-        <div class="glass"></div>
-        <div class="wax"></div>
-    </div>
-    <div class="candle" id="c2">
-        <div class="flame"></div>
-        <div class="smoke"></div>
-        <div class="glass"></div>
-        <div class="wax"></div>
-    </div>
+  <!-- Candle 1 -->
+  <div class="candle" id="c1">
+    <svg viewBox="0 0 30 80">
+      <rect class="wax" x="10" y="20" width="10" height="60" fill="#fff"/>
+      <ellipse class="flame" cx="15" cy="15" rx="5" ry="10" fill="orange"/>
+      <ellipse class="smoke" cx="15" cy="5" rx="6" ry="12" fill="rgba(255,255,255,0.3)"/>
+    </svg>
+  </div>
+  <!-- Candle 2 -->
+  <div class="candle" id="c2">
+    <svg viewBox="0 0 30 80">
+      <rect class="wax" x="10" y="20" width="10" height="60" fill="#fff"/>
+      <ellipse class="flame" cx="15" cy="15" rx="5" ry="10" fill="orange"/>
+      <ellipse class="smoke" cx="15" cy="5" rx="6" ry="12" fill="rgba(255,255,255,0.3)"/>
+    </svg>
+  </div>
 </div>
 
 <div class="line">कुछ लोग चले जाते हैं…</div>
@@ -237,36 +108,34 @@ for(let i=0;i<100;i++){
 <div class="line last">पर कुछ एहसास नहीं बदलते</div>
 
 <div class="footer">Created by <b>Shivam Rajpoot</b></div>
-
 </div>
 
-<!-- music -->
 <audio id="bgm" loop preload="auto">
 <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_3b4cf40f24.mp3" type="audio/mpeg">
 </audio>
 
 <script>
+// music mobile safe
 let started=false;
-function startMusic(){
-    if(!started){
-        const a=document.getElementById("bgm");
-        a.volume=0.5;
-        a.play().catch(()=>{});
-        started=true;
-    }
+function playMusic(){
+  if(!started){
+    const bgm=document.getElementById('bgm');
+    bgm.volume=0.5;
+    bgm.play().catch(()=>{});
+    started=true;
+  }
 }
-document.addEventListener("click",startMusic,{once:true});
-document.addEventListener("touchstart",startMusic,{once:true});
+document.addEventListener('click',playMusic,{once:true});
+document.addEventListener('touchstart',playMusic,{once:true});
 
-/* candle off sequence */
+// candle extinguish sequence
 setTimeout(()=>{
-document.querySelector("#c1 .flame").style.display="none";
-document.querySelector("#c1 .smoke").classList.add("active");
+  document.querySelector("#c1 .flame").setAttribute("fill","transparent");
+  document.querySelector("#c1 .smoke").classList.add("active");
 },16000);
-
 setTimeout(()=>{
-document.querySelector("#c2 .flame").style.display="none";
-document.querySelector("#c2 .smoke").classList.add("active");
+  document.querySelector("#c2 .flame").setAttribute("fill","transparent");
+  document.querySelector("#c2 .smoke").classList.add("active");
 },19000);
 </script>
 
