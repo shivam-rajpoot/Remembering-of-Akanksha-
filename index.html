@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Remembering Akanksha 🕯</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI', sans-serif;}
+body{
+    height:100vh;
+    background:linear-gradient(to bottom,#020111,#120f1f,#000);
+    color:white;
+    overflow:hidden;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+/* 🌧 Rain */
+.rain{
+    position:fixed;
+    width:2px;
+    height:60px;
+    background:rgba(255,255,255,0.15);
+    animation:rainFall linear infinite;
+}
+@keyframes rainFall{
+    from{transform:translateY(-100px)}
+    to{transform:translateY(110vh)}
+}
+
+/* 🕯 Candle */
+.candle{
+    position:absolute;
+    bottom:70px;
+    width:40px;
+    height:120px;
+    background:#f5f5f5;
+    border-radius:10px;
+}
+.flame{
+    position:absolute;
+    top:-35px;
+    left:50%;
+    width:22px;
+    height:35px;
+    background:radial-gradient(circle,#fff176,#ff9800,#ff5722);
+    border-radius:50%;
+    transform:translateX(-50%);
+    animation:flicker 1.2s infinite;
+}
+@keyframes flicker{
+    0%{transform:translateX(-50%) scale(1)}
+    50%{transform:translateX(-48%) scale(0.9)}
+    100%{transform:translateX(-50%) scale(1)}
+}
+
+/* 💬 Content */
+.container{
+    text-align:center;
+    max-width:90%;
+}
+h1{
+    font-size:2.4rem;
+    margin-bottom:25px;
+    animation:fadeIn 3s ease;
+}
+
+.line{
+    font-size:1.15rem;
+    line-height:1.9;
+    margin:10px 0;
+    opacity:0;
+    animation:slowFade 1.5s forwards;
+}
+.line:nth-child(2){animation-delay:1.5s}
+.line:nth-child(3){animation-delay:3.5s}
+.line:nth-child(4){animation-delay:5.5s}
+.line:nth-child(5){animation-delay:7.5s}
+.line:nth-child(6){animation-delay:9.5s}
+
+.last{
+    animation:slowFade 2s forwards, glow 3s infinite alternate;
+    animation-delay:11.5s;
+    font-weight:500;
+}
+
+@keyframes slowFade{
+    from{opacity:0;transform:translateY(15px)}
+    to{opacity:1;transform:translateY(0)}
+}
+@keyframes glow{
+    from{text-shadow:0 0 10px rgba(255,255,255,0.4)}
+    to{text-shadow:0 0 25px rgba(255,255,255,0.9)}
+}
+
+.footer{
+    margin-top:30px;
+    font-size:0.9rem;
+    color:#ccc;
+    opacity:0;
+    animation:fadeIn 3s ease forwards;
+    animation-delay:14s;
+}
+
+button{
+    margin-top:20px;
+    padding:10px 25px;
+    border:none;
+    border-radius:25px;
+    background:rgba(255,255,255,0.15);
+    color:white;
+    font-size:1rem;
+}
+
+@keyframes fadeIn{
+    from{opacity:0}
+    to{opacity:1}
+}
+</style>
+</head>
+
+<body>
+
+<!-- 🌧 Rain -->
+<script>
+for(let i=0;i<120;i++){
+    let drop=document.createElement("div");
+    drop.className="rain";
+    drop.style.left=Math.random()*100+"vw";
+    drop.style.animationDuration=(1.5+Math.random()*2)+"s";
+    drop.style.animationDelay=Math.random()*5+"s";
+    document.body.appendChild(drop);
+}
+</script>
+
+<!-- 🕯 Candle -->
+<div class="candle">
+    <div class="flame"></div>
+</div>
+
+<!-- 💭 Content -->
+<div class="container">
+    <h1>🕯 Remembering Akanksha</h1>
+
+    <div class="line">कुछ लोग चले जाते हैं…</div>
+    <div class="line">पर उनकी यादें कभी नहीं जातीं 💭</div>
+
+    <div class="line">यादें शोर नहीं करतीं,</div>
+    <div class="line">बस चुपचाप साथ चलती हैं 🤍</div>
+
+    <div class="line">समय बदल जाता है,</div>
+    <div class="line last">पर कुछ एहसास नहीं बदलते</div>
+
+    <!-- optional backup button -->
+    <button onclick="playMusic()">🎵 Play Music</button>
+
+    <div class="footer">
+        Forever in memories 🌙<br>
+        Created by <b>Shivam Rajpoot</b>
+    </div>
+</div>
+
+<!-- 🎵 Music -->
+<audio id="bgm" loop>
+    <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_3b4cf40f24.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+let musicStarted = false;
+const bgm = document.getElementById("bgm");
+
+// manual backup
+function playMusic(){
+    if(!musicStarted){
+        bgm.play();
+        musicStarted = true;
+    }
+}
+
+// auto-start on first tap anywhere
+document.addEventListener("click", () => {
+    if(!musicStarted){
+        bgm.play();
+        musicStarted = true;
+    }
+}, { once:true });
+
+document.addEventListener("touchstart", () => {
+    if(!musicStarted){
+        bgm.play();
+        musicStarted = true;
+    }
+}, { once:true });
+</script>
+
+</body>
+</html>
